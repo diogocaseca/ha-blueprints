@@ -90,11 +90,11 @@ trigger_variables:
   mqtt_entity: !input mqtt_entity
   base_topic:  !input base_topic
 
-trigger:
-  - platform: mqtt
+triggers:
+  - trigger: mqtt
     topic: "{{ base_topic  ~ '/' ~ mqtt_entity ~ '/action' }}"
 
-action:
+actions:
   - variables:
       command:      "{{ trigger.payload }}"
   - choose:

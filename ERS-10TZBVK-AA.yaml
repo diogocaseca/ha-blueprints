@@ -111,10 +111,12 @@ trigger_variables:
   mqtt_entity: !input mqtt_entity
   base_topic:  !input base_topic
 
-trigger:
-  - platform: mqtt
+triggers:
+  - trigger: mqtt
+    id: mqtt
     topic: "{{ base_topic  ~ '/' ~ mqtt_entity ~ '/action' }}"
-  - platform: state
+  - trigger: state
+    id: state
     entity_id: !input "state_entity"
 
 ###### https://manuals.plus/earda-technologies/ers-10tzbvk-aa-smart-knob-manual
@@ -133,9 +135,9 @@ trigger:
 # color_temperature_step_down // left rotate + press
 # color_temperature_step_up   // right rotate + press
 
-action:
+actions:
   - variables:
-      platform: "{{ trigger.platform }}"
+      platform: "{{ trigger.id }}"
       payload:  "{{ trigger.to_state.state if trigger.to_state|default(false,true) else trigger.payload }}"
   - choose:
       - conditions:
